@@ -6,74 +6,48 @@ using System.Threading.Tasks;
 
 namespace BeregningTest
 {
-    class Program
+    public class Program
     {
-        private double foodSumDay;
-        private double envelopDay;
-        private double houseSumDay;
 
-        public double FoodSumDay 
+        static void Main(string[] args)
         {
-            get { return foodSumDay; }
-            set { foodSumDay = value; }
-        }
+            ///Making a list using the class Hus as type.
+            List<Hus> Total = new List<Hus>();
 
+            /// Calling Hus object hus1, hus2, hus3 with specific parameters. The Add and Set methods must be envoked as it is now. 
 
-        public double EnvolpeDay { get; set; }
-        public double HouseSumDay { get; set; }
-
-
-        public double FinalSum { get; set; }
-        public double UdlagtSum { get; set; }
-        //public Hus HusObj { get; set; }
-
-        public Program()
-        {
-           
-        }
-
-        public void AddFoodSumDay(double foodSumDay)
-        {
-            this.foodSumDay = foodSumDay;
-        }
-
-        public double GetEnvelopDay(int XXVoksne, int YYUnge, int ZZBørn)
-        {
-            envelopDay = foodSumDay / ((XXVoksne * 1) + (YYUnge * 0.5) + (ZZBørn * 0.25));
-            return envelopDay;
-        }
-
-        public double GetHouseSumDay(int XVoksne, int YUnge, int ZBørn)
-        {
-            houseSumDay = (envelopDay * XVoksne * 1) + (envelopDay*YUnge*0.5) + (envelopDay*ZBørn*0.25);
-            return houseSumDay;
-        }
-
-
-        static void Main()
-        {
-            Program hus1 = new Program();
-
+            Hus hus1 = new Hus(2,3,1);
             hus1.AddFoodSumDay(1000);
-             
-            Console.WriteLine($"{hus1.GetEnvelopDay(3, 4, 11)}");
-
-            Console.WriteLine($"{hus1.GetHouseSumDay(2,3,1)}");
-
-            Program hus2 = new Program();
-
+            hus1.SetEnvelopDay(3,4,11);
+              
+            Hus hus2 = new Hus(1,1,0);
             hus2.AddFoodSumDay(1000);
+            hus2.SetEnvelopDay(3,4,11);
 
-            Console.WriteLine($"{hus2.GetEnvelopDay(3,4,11)}");
-
-            Console.WriteLine($"{hus2.GetHouseSumDay(1,1,0)}");
-
-            Program hus3 = new Program();
-
+            Hus hus3 = new Hus(0,0,10);
             hus3.AddFoodSumDay(1000);
+            hus3.SetEnvelopDay(3,4,11);
 
-            Console.WriteLine($"{hus3.GetEnvelopDay(3,4,11)}");
-            Console.WriteLine($"{hus3.GetHouseSumDay(0,0,10)}");
+            //Adding the object hus1, hus2, hus3 to the list Total;
+
+            Total.Add(hus1);
+            Total.Add(hus2);
+            Total.Add(hus3);
+
+            ///Running through the list of Hus objects. 
+            ///Foreach Hus object in the list the Sum for the House on a given dinner day is calculated.
+
+            foreach (Hus h in Total)
+            {
+                Console.WriteLine($"Prisen for mandag er i boligen:{h.GetHouseSumDay()} kr");
+                
+            }
+
+            ///Calls the method to balance the acounts for all houses in the Hus object list.
+
+            Console.WriteLine( $"Hus 1 konto er: {hus1.GetExpensesBalencedDay(0)}, hus 2 konto er: {hus2.GetExpensesBalencedDay(0)}, hus 3 konto er:{hus3.GetExpensesBalencedDay(1000)}");
+
+            ///Summen af Husene skal valideres med indkøbsUdlæget.
 
             Console.ReadLine();
         }
